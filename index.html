@@ -1,0 +1,31 @@
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+    <p>Sandbox Name</p>
+    <input type="text" class="tex">
+    <button class="btn">click</button>
+    <script>
+        const btn = document.querySelector('.btn');
+
+        btn.addEventListener('click', () => {
+            kek = document.querySelector('.tex').value;
+            var childProcess = require('child_process');
+            var comand = childProcess.execSync(`ls`).toString()
+            let arr = comand.split('\n');
+
+            arr.forEach(item => {
+                if (item === '10') {
+                    childProcess.execSync('mkdir keks');
+                }
+            });
+            
+
+        
+        });
+    </script>
+</body>
+
+</html>
