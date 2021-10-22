@@ -1,6 +1,6 @@
 {
   "name": "electron",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Данная утилита предназначена для изменения пропертей на сэндбоксе, а также перезапуска",
   "main": "app.js",
   "scripts": {
@@ -10,6 +10,10 @@
     "ship": "electron-builder -p always",
     "ship:all": "electron-builder -mwl --x64 --ia32 -p always"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leosoft11/electron.git"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -17,6 +21,7 @@
     "electron-builder": "^22.13.1"
   },
   "dependencies": {
-    "ship": "^0.2.5"
+    "ship": "^0.2.5",
+    "update-electron-app": "^2.0.1"
   }
 }
