@@ -3,28 +3,136 @@
 <head>
 </head>
 
-<body>
+<br>
     <p>Sandbox Name</p>
-    <input type="text" class="tex">
-    <button class="btn">click</button>
+    <input type="text" class="tex" placeholder="sandbox">
+    <p>Properties (Тут добавляем проперю в конец пропертей)</p>
+    <input type="text" class="prop" placeholder="properties value">
+
+    <button class="btnProps">Добавить пропертю в новую строку</button>
+    <br>
+    <br>
+    <br>
+    <p>Properties (Тут можно поменять проперю по названию, для того, чтобы поуличить названия, необходимо нажать кнопку "Получить список пропертей" но тут нельзя поменять значения вида #vend, для этого нужно использовать метод который находится выше</p>
+
+    </br>
+    <select id="service">
+        <option>node 2</option>
+        <option>node 3</option>
+        <option>imager 1</option>
+    </select>
+
+    <select id="propertiesNames"></select>
+    <input type="text" class="propertiesValue" placeholder="Значение проперти">
+
+    <br>
+    <br>
+    <button class="btn">Перезапустить Pod</button>
+    <br>
+    </br>
+    <button class="btnEditProps">Заменить уже существующую пропертю</button>
+
+
+    <button class="get">Получить список пропертей</button>
+
+    <button class="test">Получить список пропертей</button>
+
+
     <script>
-        const btn = document.querySelector('.btn');
+        const btnKill = document.querySelector('.btn'),
+              btnProps = document.querySelector('.btnProps'),
+              btnPropsEdit = document.querySelector('.btnEditProps'),
+              propertiesNamesSelect = document.querySelector('#propertiesNames');
 
-        btn.addEventListener('click', () => {
-            kek = document.querySelector('.tex').value;
-            var childProcess = require('child_process');
-            var comand = childProcess.execSync(`ls`).toString()
-            let arr = comand.split('\n');
 
-            arr.forEach(item => {
-                if (item === '10') {
-                    childProcess.execSync('mkdir keks');
-                }
-            });
+        btnKill.addEventListener('click', () => {
+            const services = document.querySelector('#service').value,
+                sandoxName = document.querySelector('.tex').value;
             
+                try{
+                      if (sandoxName.length && services.length){
+                 var childProcess = require('child_process');
+                 var comand = childProcess.execSync(`bash test.sh ${sandoxName} ${services}`).toString();
+                 console.log(sandoxName, services);
+                 console.log(comand);
 
-        
+               
+                //  console.log(comand);
+            } 
+            else{
+                alert('Необходимо заполнить все поля :)');
+            }
+
+                } catch(e){
+                    alert(`Скорее всего такого сэндбокса нету, вот ошибка поподробнее: \n ${e}`);
+
+                }
         });
+
+        btnProps.addEventListener('click', () => {
+            const sandoxProperties = document.querySelector('.prop').value,
+                        sandoxName = document.querySelector('.tex').value,
+                        services = document.querySelector('#service').value;
+
+            if (sandoxProperties.length && services.length && sandoxName.length){
+                var childProcess = require('child_process');
+                var comand = childProcess.execSync(`bash editprop.sh ${sandoxName} ${services} ${sandoxProperties}`).toString()
+            }
+            else{
+                alert('Заполните пожалуйста поля')
+            }
+        });
+
+        btnPropsEdit.addEventListener('click', () => {
+            const sandoxProperties = document.querySelector('.propertiesValue').value,
+                        sandoxName = document.querySelector('.tex').value,
+                        services = document.querySelector('#service').value,
+                        get = document.querySelector('#propertiesNames').value;
+            
+                try{
+                      if (sandoxName.length && services.length && sandoxProperties.length && get.length){
+                 var childProcess = require('child_process');
+                 var comand = childProcess.execSync(`bash prop_test.sh ${sandoxName} ${services} ${get} ${sandoxProperties}`).toString();
+                 //bash prop_test.sh lukast node 2 wepay.client_secret test
+                 console.log(sandoxName, services);
+                 console.log(comand);
+            } 
+            else{
+                alert('Необходимо заполнить все поля :)');
+            }
+
+                } catch(e){
+                    alert(`Скорее всего такого сэндбокса нету, вот ошибка поподробнее: \n ${e}`);
+
+                }
+        });
+
+        document.querySelector('.get').addEventListener('click', () => {
+            propertiesNamesSelect.innerHTML = '';
+            const  sandoxName = document.querySelector('.tex').value,
+                    services = document.querySelector('#service').value;
+    
+                 if (sandoxName.length && services.length) {
+                    var childProcess = require('child_process');
+                    var comand = childProcess.execSync(`bash get_conf.sh ${sandoxName} ${services}`).toString();
+                    comand.split("\n").forEach(element => {
+                        let name = element.substr(0,element.indexOf("="));
+                        let nameRep = name.replace(/\s/g, '');
+                        propertiesNamesSelect.innerHTML += `<option>${nameRep}</option>`;
+                 });
+                 } else {
+                     alert('Кажется что то забыли ввести');
+                 }
+                 
+        });
+
+        document.querySelector('.test').addEventListener('click', () => {
+            var childProcess = require('child_process');
+            var comand = childProcess.execSync(`ls`).toString();
+            console.log(comand);
+        })
+
+        // sed -i  's/\(^#vend.secretKeys = \).*/\1Newvalue/' node.properties
     </script>
 </body>
 
