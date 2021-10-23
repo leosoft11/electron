@@ -35,9 +35,7 @@
 
     <button class="get">Получить список пропертей</button>
 
-    <button class="test">Получить список пропертей</button>
-
-
+    <!-- <button class="test">Тестовая кнопка</button> -->
     <script>
         const btnKill = document.querySelector('.btn'),
               btnProps = document.querySelector('.btnProps'),
@@ -52,7 +50,7 @@
                 try{
                       if (sandoxName.length && services.length){
                  var childProcess = require('child_process');
-                 var comand = childProcess.execSync(`bash ~/bash/test.sh ${sandoxName} ${services}`).toString();
+                 var comand = childProcess.execSync(`bash test.sh ${sandoxName} ${services}`).toString();
                  console.log(sandoxName, services);
                  console.log(comand);
 
@@ -76,7 +74,7 @@
 
             if (sandoxProperties.length && services.length && sandoxName.length){
                 var childProcess = require('child_process');
-                var comand = childProcess.execSync(`bash ~/bash/editprop.sh ${sandoxName} ${services} ${sandoxProperties}`).toString()
+                var comand = childProcess.execSync(`bash editprop.sh ${sandoxName} ${services} ${sandoxProperties}`).toString()
             }
             else{
                 alert('Заполните пожалуйста поля')
@@ -92,7 +90,7 @@
                 try{
                       if (sandoxName.length && services.length && sandoxProperties.length && get.length){
                  var childProcess = require('child_process');
-                 var comand = childProcess.execSync(`bash ~/bash/prop_test.sh ${sandoxName} ${services} ${get} ${sandoxProperties}`).toString();
+                 var comand = childProcess.execSync(`bash prop_test.sh ${sandoxName} ${services} ${get} ${sandoxProperties}`).toString();
                  //bash prop_test.sh lukast node 2 wepay.client_secret test
                  console.log(sandoxName, services);
                  console.log(comand);
@@ -114,7 +112,7 @@
     
                  if (sandoxName.length && services.length) {
                     var childProcess = require('child_process');
-                    var comand = childProcess.execSync(`bash ~/bash/get_conf.sh ${sandoxName} ${services}`).toString();
+                    var comand = childProcess.execSync(`bash get_conf.sh ${sandoxName} ${services}`).toString();
                     comand.split("\n").forEach(element => {
                         let name = element.substr(0,element.indexOf("="));
                         let nameRep = name.replace(/\s/g, '');
@@ -126,11 +124,11 @@
                  
         });
 
-        document.querySelector('.test').addEventListener('click', () => {
-            var childProcess = require('child_process');
-            var comand = childProcess.execSync(`ls`).toString();
-            console.log(comand);
-        })
+        // document.querySelector('.test').addEventListener('click', () => {
+        //     var childProcess = require('child_process');
+        //     var comand = childProcess.execSync(`kubectl -n sandbox-80044pay get pod'`).toString();
+        //     console.log(comand);
+        // })
 
         // sed -i  's/\(^#vend.secretKeys = \).*/\1Newvalue/' node.properties
     </script>
