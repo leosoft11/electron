@@ -35,6 +35,25 @@
 
     <button class="get">Получить список пропертей</button>
 
+    <br>
+    <br>
+
+    <p>Запросы psql-sand</p>
+
+
+    <select class="names_psql">
+        <option>lspos</option>
+        <option>node_eu-fra2</option>
+        <option>node_eu-fra3</option>
+        <option>proxy</option>
+    </select>
+
+    <input type="text" class="input_psql" placeholder="sql запрос">
+
+    <button class="btn_psql">Выполнить запрос</button>
+
+
+
     <!-- <button class="test">Тестовая кнопка</button> -->
     <script>
         const btnKill = document.querySelector('.btn'),
@@ -122,6 +141,22 @@
                      alert('Кажется что то забыли ввести');
                  }
                  
+        });
+
+
+        document.querySelector('.btn_psql').addEventListener('click', () => {
+                const names_psql = document.querySelector('.names_psql').value,
+                        input_psql = document.querySelector('.input_psql').value,
+                        sandoxName = document.querySelector('.tex').value;
+
+                        if (names_psql.length && input_psql.length && sandoxName.length) {
+                            var childProcess = require('child_process');
+                            var comand = childProcess.execSync(`echo "${input_psql}" | psql-sand ${sandoxName} ${names_psql}`).toString();
+                            console.log(comand);
+                        } else {
+                            alert(`Видимо какое то поле не заполнено 'Sandbox name && Sql_запрос'`)
+                        }
+                      
         });
 
         // document.querySelector('.test').addEventListener('click', () => {
